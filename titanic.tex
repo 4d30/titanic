@@ -1,0 +1,126 @@
+\documentclass[10pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{float}
+\usepackage{enumitem}
+\usepackage{indentfirst}
+\usepackage{wrapfig}
+\usepackage{graphicx}
+\usepackage{multicol}
+
+\graphicspath{ {./} }
+
+%\setlength{\parindent}{0pt}
+
+\title{Predicting Survival on the RMS Titanic\\
+	\large{Binary Classification}}
+\author{	Joseph Mifsud  \\
+		Hungry for Opportunity}
+\date{\today}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+
+	A study was performed to model passenger survival on the RMS Titanic.
+	The model training dataset including 11 features for 891 passengers was downloaded from Kaggle.com.
+	Missing values for specific features were modeled and estimated.
+	Each feature was tested for significance and correlation with survival with Pearson's r metric.
+	A logistic regressor was created from these signifcant features to estimate survival.
+	The model was tested on a reserved sample of 491 passengers.
+	The test yielded an accuracy of (0.87 $\pm$ 0.035) and an f1-score of (0.82 $\pm$ 0.040).
+	Although variables were not analyzed for correlation with one another, this is a useful model for predicting the survival of passengers.
+
+\end{abstract}
+\pagebreak
+
+
+\begin{multicols}{2}
+\section{Introduction}
+\subsection{Background}
+	
+	Binary classification is an important tool for every data scientist.
+	Whether an object or action can be categorized into a feature of interest or not is inherently an task of binary classification.
+	Binary classification could be use to help a farmer determine whether or not to plant a field or inform a physician if a growth is likely cancerous.
+	This tool's use-case is very common.
+	In demonstration of this machine learning technique, features of the passengers on the ill-fated RMS Titanic are used to estimate his or her survival.
+	
+\subsection{Problem}	
+	
+	"Which are the models and variables that produce the greatest f1-score for our test-set?"
+
+\subsection{Interest}
+	
+	Binary classification is an incredibly useful tool for many different types of activities.
+	Binary classification is of interest to the marketing department when answering the question "Is this person a potential customer?"
+	It can answer the banker's question of "Should I provide this loan?"
+	In medicine, binary classification can be useful to answer the question "Is this a benign growth?"
+	Even the farmer who wants to know if a field should be planted can be assisted by binary classification.
+	This versatile tool is of interest of a wide range of individuals in every industry.
+
+\section{Data} \label{documentclasses}
+\subsection{Data Sources}
+
+	Kaggle.com provided the dataset for this analysis.
+%	Features included in the dataset are:
+%	\begin{itemize}[noitemsep]
+%		\item PassengerId: A unique number associated with each passenger
+%		\item Survived: Did this passenger survive?
+%		\item Pclass: Passenger class
+%		\item Name: Passenger's name
+%		\item Sex: Male or Female
+%		\item Age: Passenger's age
+%		\item SibSp: Number of the passenger's siblings and spouses also on board
+%		\item Parch: Number of the passenger's children and parents also on board
+%		\item Ticket: The passeneger's ticket number
+%		\item Fare: The cost of the passenger's ticket
+%		\item Cabin: Which cabin the passenger stayed in
+%		\item Embarked: From which port the passenger embarked.
+%	\end{itemize}
+
+\subsection{Data Cleaning}
+	
+
+	There were three features of the dataset which were missing values for a number of passengers: (1) Age, (2) Cabin, and (3) Embarked.
+	The most straitforward feature to address was which port the passenger embarked from.
+	The passenger's fare and passenger class would be indicative of this or her port of embarkation.
+	A decision-tree classifier was defined and fit to these features from 711 passengers.
+	The decision-tree model was tested against a reserve sample of 178 passengers yielding an accuracy score of 0.90 and an f1-score of 0.90.
+	The port of embarkation for the two target passengers was then estimated with this model.
+	It was estimated that both of these passengers embarked at Southampton.\\
+	\begin{center}
+	\includegraphics[width=0.3725\textwidth]{embarked_dt}\\
+	\end{center}
+	177 passengers in this dataset did not have an age.
+	There are various techniques to handle missing values in data.
+	One such technique is imputation.
+	A kNN model of the age of the passengers was created.
+	An iterative approach was used to determine the number of neighbors in the passenger model.
+	The number of neighbor was varied in a for-loop between 1 and 30 neighbors.
+	The RMSE for each number of neighbors was calculated and averaged over 250 iterations.
+	The average RMSE was plotted against the number of neighbors.
+	\begin{center}	
+	\includegraphics[width=0.3725\textwidth]{age_rmse}\\
+	\end{center}
+	
+	
+\subsection{Feature Selection}
+	
+	The Kaggle data set includes features which were irrelevant or redundant to this study.
+	The most striking example of irrelevance is PassengerId.
+	The feature set of this study was established by calculating Pearson's r for correlation of each feature with survival.
+	Features that were found to have a correlation of any strength at a significance level of 0.05 were included in the model feature set.
+
+\section{Methodology}
+
+\section{Results}
+
+
+\section{Discussion}
+
+\section{Conclusion}\label{conclusions}
+
+\end{multicols}
+\end{document}
+
+%\refrences
+%1 - https://arxiv.org/pdf/2006.11105.pdf
