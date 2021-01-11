@@ -80,7 +80,7 @@
 \subsection{Data Cleaning}
 	
 
-	There were three features of the dataset which were missing values for a number of passengers: (1) Age, (2) Cabin, and (3) Embarked.
+	There were three features of the dataset which were missing values for a number of passengers: Age, Cabin, and Embarked.
 	The most straitforward feature to address was which port the passenger embarked from.
 	The passenger's fare and passenger class would be indicative of this or her port of embarkation.
 	A decision-tree classifier was defined and fit to these features from 711 passengers.
@@ -95,14 +95,83 @@
 	One such technique is imputation.
 	A kNN model of the age of the passengers was created.
 	An iterative approach was used to determine the number of neighbors in the passenger model.
-	The number of neighbor was varied in a for-loop between 1 and 30 neighbors.
-	The RMSE for each number of neighbors was calculated and averaged over 250 iterations.
+	The number of neighbor was varied in a for-loop between 1 and 20 neighbors.
+	The RMSE for each number of neighbors was calculated and averaged over 500 iterations.
 	The average RMSE was plotted against the number of neighbors.
 	\begin{center}	
-	\includegraphics[width=0.3725\textwidth]{age_rmse}\\
+	\includegraphics[width=0.45\textwidth]{age_rmse}\\
 	\end{center}
-	
-	
+	The "elbow method' was use to select the number of neighbors in our kNN model.
+	Four neighbors were selected to estimate the age of each passenger whose age information was missing from the data set.
+	The model was tested against a randomly reserved set of 20\% of the sample data.
+	1,000 tests were completed yielding a mean RMSE of (14.11 $\pm$ 0.85) years.
+	The RMSE of this model represents roughly half of a human generation.
+	\begin{center}
+	\includegraphics[width=0.45\textwidth]{agermsefreq}\\
+	\end{center}
+	The shape of the modeled age distribution is similar in center, shape, and spread to the known age distribution.
+	Although the RMSE of the model is a significant portion of the human lifespan, there is no obvious reason to reject the results of the model.
+	\begin{center}
+	\includegraphics[width=0.45\textwidth]{agemodeldist}\\
+	\end{center}
+	The last feature which included missing data was Cabin.
+	77\% of all passengers have no record of which cabin they stayed in.
+	It was thought that no appreciable amount of information could be mined from this feature as it is.
+	Therefore, the cabin feature did not recieve a modeling treatment.
+	The feature was ultimately engineered into another feature "Deck."
+
+\subsection{Feature Engineering}
+	Within the data of the Kaggle dataset were some additional data.
+	The data in the set was engineered to produce additional data for the model.
+	Two features were engineered from the existing dataset: "Title" and "Deck."
+	An appreciable amount of passengers did not have a known value for cabin.
+	An effort was made to salvage any information in this feature by engineering the "Deck" feature.
+	The "Deck" feature was created from the "Cabin" feature.
+	Each known cabin number was prepended with a letter to indicate on which deck the cabin was located.
+	This letter was stripped from all passengers whose cabin information was known and included in the new feature.
+	Accordingly for all passengers whose cabin, and therefore deck, was unknown a question-mark acted as placeholder for the passenger's deck.
+	\begin{center}
+	\begin{tabular}{l r}
+		Deck	& Count\\
+		\hline
+		? 	& 687\\
+		A 	& 15\\
+		B 	& 47\\
+		C 	& 59\\
+		D 	& 33\\
+		E 	& 32\\
+		F 	& 13\\
+		G 	& 4\\
+		T 	& 1\\
+	\end{tabular}
+	\end{center}
+
+
+	Each passenger's name included a title like "Mrs" or "Capt."
+	This title was stripped from the passenger and included in the dataset as another feature.\\
+	\begin{center}
+	\begin{tabular}{l r}
+		Title         &	Freq.\\
+		\hline
+		Mr            & 517\\
+		Miss          & 182\\
+		Mrs           & 125\\
+		Master         & 40\\
+		Dr              & 7\\
+		Rev             & 6\\
+		Mlle            & 2\\
+		Major           & 2\\
+		Col             & 2\\
+		Lady            & 1\\
+		Capt            & 1\\
+		Don             & 1\\
+		Mme             & 1\\
+		Sir             & 1\\
+		theCountess     & 1\\
+		Jonkheer        & 1\\
+		Ms              & 1\\
+	\end{tabular}
+	\end{center}
 \subsection{Feature Selection}
 	
 	The Kaggle data set includes features which were irrelevant or redundant to this study.
