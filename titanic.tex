@@ -145,33 +145,31 @@
 		T 	& 1\\
 	\end{tabular}
 	\end{center}
-
-
-	Each passenger's name included a title like "Mrs" or "Capt."
+	Each passenger's name includes a title.
+	Example titles are "Mrs" and "Capt."
 	This title was stripped from the passenger and included in the dataset as another feature.\\
 	\begin{center}
 	\begin{tabular}{l r}
 		Title         &	Freq.\\
 		\hline
 		Mr            & 517\\
-		Miss          & 182\\
-		Mrs           & 125\\
+		Miss          & 185\\
+		Mrs           & 127\\
 		Master         & 40\\
-		Dr              & 7\\
-		Rev             & 6\\
-		Mlle            & 2\\
-		Major           & 2\\
-		Col             & 2\\
-		Lady            & 1\\
-		Capt            & 1\\
-		Don             & 1\\
-		Mme             & 1\\
-		Sir             & 1\\
-		theCountess     & 1\\
-		Jonkheer        & 1\\
-		Ms              & 1\\
+		Prestigious    & 22\\
 	\end{tabular}
 	\end{center}
+	The less common, and more prestigious, titles were replaced with the string 'Prestigious.'
+	Both Mme and Ms were replaced with Mrs.
+	Mlle was replaced with Miss.
+
+	The Age feature in the dataset provides the passenger's age in years.
+	This continuous variable was binned into bins of equal width in years.
+	The Rice rule was used to determine the number of classes.
+	The Age feature was binned into 20 bins.
+	The width of each bin was 4 years.
+
+
 \subsection{Feature Selection}
 	
 	The Kaggle data set includes features which were irrelevant or redundant to this study.
@@ -181,6 +179,9 @@
 
 \section{Methodology}
 
+	The dataset was split into test and train sets. 
+	The reserve rate for the test set was 20\%.
+	Features from the feature set were one-hot encoded for each passenger.
 \section{Results}
 
 \section{Discussion}
