@@ -31,8 +31,6 @@
 	Although variables were not analyzed for correlation with one another, this is a useful model for predicting the survival of passengers.
 
 \end{abstract}
-\pagebreak
-
 
 \begin{multicols}{2}
 \section{Introduction}
@@ -56,7 +54,6 @@
 	In medicine, binary classification can be useful to answer the question "Is this a benign growth?"
 	Even the farmer who wants to know if a field should be planted can be assisted by binary classification.
 	This versatile tool is of interest of a wide range of individuals in every industry.
-
 \section{Data} \label{documentclasses}
 \subsection{Data Sources}
 
@@ -80,7 +77,7 @@
 \subsection{Data Cleaning}
 	
 
-	There were three features of the dataset which were missing values for a number of passengers: Age, Cabin, and Embarked.
+	There were three features of the dataset which were missing values for a number of passengers: \textbf{Age}, \textbf{Cabin}, and \textbf{Embarked}.
 	The most straitforward feature to address was which port the passenger embarked from.
 	The passenger's fare and passenger class would be indicative of this or her port of embarkation.
 	A decision-tree classifier was defined and fit to these features from 711 passengers.
@@ -90,6 +87,7 @@
 	\begin{center}
 	\includegraphics[width=0.3725\textwidth]{embarked_dt}\\
 	\end{center}
+
 	177 passengers in this dataset did not have an age.
 	There are various techniques to handle missing values in data.
 	One such technique is imputation.
@@ -101,6 +99,7 @@
 	\begin{center}	
 	\includegraphics[width=0.45\textwidth]{age_rmse}\\
 	\end{center}
+
 	The "elbow method' was use to select the number of neighbors in our kNN model.
 	Four neighbors were selected to estimate the age of each passenger whose age information was missing from the data set.
 	The model was tested against a randomly reserved set of 20\% of the sample data.
@@ -109,30 +108,32 @@
 	\begin{center}
 	\includegraphics[width=0.45\textwidth]{agermsefreq}\\
 	\end{center}
+
 	The shape of the modeled age distribution is similar in center, shape, and spread to the known age distribution.
 	Although the RMSE of the model is a significant portion of the human lifespan, there is no obvious reason to reject the results of the model.
 	\begin{center}
 	\includegraphics[width=0.45\textwidth]{agemodeldist}\\
 	\end{center}
+
 	The last feature which included missing data was Cabin.
 	77\% of all passengers have no record of which cabin they stayed in.
 	It was thought that no appreciable amount of information could be mined from this feature as it is.
 	Therefore, the cabin feature did not recieve a modeling treatment.
-	The feature was ultimately engineered into another feature "Deck."
+	The feature was ultimately engineered into another feature \textbf{Deck}.
 
 \subsection{Feature Engineering}
 	Within the data of the Kaggle dataset were some additional data.
 	The data in the set was engineered to produce additional data for the model.
-	Two features were engineered from the existing dataset: "Title" and "Deck."
+	Two features were engineered from the existing dataset: \textbf{Title} and \textbf{Deck}.
 	An appreciable amount of passengers did not have a known value for cabin.
-	An effort was made to salvage any information in this feature by engineering the "Deck" feature.
-	The "Deck" feature was created from the "Cabin" feature.
+	An effort was made to salvage any information in this feature by engineering \textbf{Deck}.
+	The \textbf{Deck} feature was created from the \textbf{Cabin} feature.
 	Each known cabin number was prepended with a letter to indicate on which deck the cabin was located.
 	This letter was stripped from all passengers whose cabin information was known and included in the new feature.
 	Accordingly for all passengers whose cabin, and therefore deck, was unknown a question-mark acted as placeholder for the passenger's deck.
 	\begin{center}
 	\begin{tabular}{l r}
-		Deck	& Count\\
+		\textbf{Deck}	& Freq.\\
 		\hline
 		? 	& 687\\
 		A 	& 15\\
@@ -145,12 +146,13 @@
 		T 	& 1\\
 	\end{tabular}
 	\end{center}
+
 	Each passenger's name includes a title.
 	Example titles are "Mrs" and "Capt."
 	This title was stripped from the passenger and included in the dataset as another feature.\\
 	\begin{center}
 	\begin{tabular}{l r}
-		Title         &	Freq.\\
+		\textbf{Title}&	Freq.\\
 		\hline
 		Mr            & 517\\
 		Miss          & 185\\
@@ -159,16 +161,24 @@
 		Prestigious    & 22\\
 	\end{tabular}
 	\end{center}
+
 	The less common, and more prestigious, titles were replaced with the string 'Prestigious.'
 	Both Mme and Ms were replaced with Mrs.
 	Mlle was replaced with Miss.
+	\begin{center}
+	\includegraphics[width=0.45\textwidth]{agedist}
+	\end{center}
 
-	The Age feature in the dataset provides the passenger's age in years.
+	A passenger's age in years is given by the Age feature.
 	This continuous variable was binned into bins of equal width in years.
-	The Rice rule was used to determine the number of classes.
-	The Age feature was binned into 20 bins.
+	The Rice rule was used to determine the number of bins.
+	20 bins were used to encode the Age feature.
 	The width of each bin was 4 years.
+	Each passenger was one-hot encoded to indicate in which age group bin he or she belongs.
 
+	A feature which was investigated but ultimately rejected for engineering was ticket number.
+	25\% of passenger's ticket number have a short, cryptic, alphanumeric prefix.
+	The sample size of any particular prefix was not large enough to make meaning for the population.
 
 \subsection{Feature Selection}
 	
@@ -176,16 +186,75 @@
 	The most striking example of irrelevance is PassengerId.
 	The feature set of this study was established by calculating Pearson's r for correlation of each feature with survival.
 	Features that were found to have a correlation of any strength at a significance level of 0.05 were included in the model feature set.
+	21 features were ultimately included in the model.
+
+	\begin{tabular}{l l l}
+		Feature & Correlation & P-value \\
+		\hline
+
+		Mr & -0.55 & $2.4\times10^{-71}$ \\
+		male & -0.54 & $1.41\times10^{-69}$ \\
+		Class3 & -0.32 & $5.5\times10^{-23}$ \\
+		Deck ? & -0.32 & $3.09\times10^{-22}$ \\
+		Parch0 & -0.15 & $1.0\times10^{-5}$ \\
+		Southampton & -0.15 & $7.22\times10^{-6}$ \\
+		SibSp0 & -0.12 & $5.3\times10^{-4}$ \\
+		SibSp8 & -0.07 & $3.6\times10^{-2}$ \\
+		Queenstown & 0.01 & $9.134\times10^{-1}$ \\
+		Parch2 & 0.08 & $2.5\times10^{-2}$ \\
+		Master & 0.09 & $1.1\times10^{-2}$ \\
+		Class2 & 0.09 & $5.3\times10^{-3}$ \\
+		Deck C & 0.12  & $6.06\times10^{-4}$ \\
+		0-4 & 0.13 & $1.02\times10^{-4}$ \\
+		Parch1 & 0.13 & $5.9\times10^{-5}$ \\
+		Deck D & 0.15 & $6.23\times10^{-6}$ \\
+		Deck E & 0.15 & $1.33\times10^{-5}$ \\
+		SibSp1 & 0.17 & $2.0\times10^{-7}$ \\
+		Deck B & 0.18 & $1.44\times10^{-7}$ \\
+		Class1 & 0.29 & $3.2\times10^{-8}$ \\
+		Miss & 0.34 & $6.7\times10^{-25}$ \\
+		Mrs & 0.34 & $2.7\times10^{-26}$ \\
+
+	\end{tabular}
+
+	It is likely there are correlations between these features.
+	\textbf{Mr} and \textbf{male} are very similarly correlated with survival and probably with one another.
+	Indeed, there may be correlations between deck and passenger class.
+	Correlation between features was not tested for.
+	Implementing this procedure would decrease model complexity but it isn't though to have an impact on model performance.
 
 \section{Methodology}
 
-	The dataset was split into test and train sets. 
-	The reserve rate for the test set was 20\%.
 	Features from the feature set were one-hot encoded for each passenger.
+	The data were then split into a training and test fold.
+	20\% of the data were held for the test fold.
+	The training data were fit to a logistic regressor.
+
 \section{Results}
+
+	The test yielded an accuracy of (0.78 $\pm$ 0.035) and an f1-score of (0.82 $\pm$ 0.040).
+	\begin{center}
+		\includegraphics[width=0.375\textwidth]{confusion}
+	\end{center}
+	The overall performance of the model is above average.
+	Among competitors in the Kaggle competition, this model scored as good as or better than 87\% of the competing models.
+	\begin{center}
+		\includegraphics[width=0.375\textwidth]{kaggle}
+	\end{center}
 
 \section{Discussion}
 
+	This model is both useful and competitive.
+	It outperforms the lionshare of models on the Kaggle platform.
+	Improvements can be made in multiple areas.
+	
+	The difference  between the test accuracy and the competition accuracy is greater than 10\% of the competition accuracy.
+	This could indicate the model is overfit in at least one region.
+	\textbf{Age} stands out as a feature for further investigation.
+	Depending on which passengers were selected for the training set, there were different outcomes for which age groups were correlated with \textbf{Survived}.
+
+	Further, 17 of the features included in the model have a very weak, but significant correlation with \textbf{Survived}.
+	It is likely that eliminating some of these weaker features by testing for correlation between them would enhance the accuracy of the model.
 \section{Conclusion}\label{conclusions}
 
 \end{multicols}
