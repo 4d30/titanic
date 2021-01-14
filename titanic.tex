@@ -21,11 +21,11 @@
 \maketitle
 \begin{abstract}
 
-	A study was performed to model passenger survival on the RMS Titanic.
+	A study was performed to compete in the modeling passenger survival on the RMS Titanic.
 	The model training dataset including 11 features for 891 passengers was downloaded from Kaggle.com.
 	Missing values for specific features were modeled and estimated.
 	Each feature was tested for significance and correlation with survival with Pearson's r metric.
-	A logistic regressor was created from these signifcant features to estimate survival.
+	A logistic regressor was created from these significant features to estimate survival.
 	The model was tested on a reserved sample of 491 passengers.
 	The test yielded an accuracy of (0.87 $\pm$ 0.035) and an f1-score of (0.82 $\pm$ 0.040).
 	Although variables were not analyzed for correlation with one another, this is a useful model for predicting the survival of passengers.
@@ -78,7 +78,7 @@
 	
 
 	There were three features of the dataset which were missing values for a number of passengers: \textbf{Age}, \textbf{Cabin}, and \textbf{Embarked}.
-	The most straitforward feature to address was which port the passenger embarked from.
+	The most straightforward feature to address was which port the passenger embarked from.
 	The passenger's fare and passenger class would be indicative of this or her port of embarkation.
 	A decision-tree classifier was defined and fit to these features from 711 passengers.
 	The decision-tree model was tested against a reserve sample of 178 passengers yielding an accuracy score of 0.90 and an f1-score of 0.90.
@@ -118,7 +118,7 @@
 	The last feature which included missing data was Cabin.
 	77\% of all passengers have no record of which cabin they stayed in.
 	It was thought that no appreciable amount of information could be mined from this feature as it is.
-	Therefore, the cabin feature did not recieve a modeling treatment.
+	Therefore, the cabin feature did not receive a modeling treatment.
 	The feature was ultimately engineered into another feature \textbf{Deck}.
 
 \subsection{Feature Engineering}
@@ -241,11 +241,12 @@
 	\begin{center}
 		\includegraphics[width=0.375\textwidth]{kaggle}
 	\end{center}
+	There are 67\% more type 2 errors than type one.
+	A reduction in type 2 error would increase model performance.
 
 \section{Discussion}
 
-	This model is both useful and competitive.
-	It outperforms the lionshare of models on the Kaggle platform.
+	This model outperforms the lionshare of models on the Kaggle platform.
 	Improvements can be made in multiple areas.
 	
 	The difference  between the test accuracy and the competition accuracy is greater than 10\% of the competition accuracy.
@@ -255,7 +256,19 @@
 
 	Further, 17 of the features included in the model have a very weak, but significant correlation with \textbf{Survived}.
 	It is likely that eliminating some of these weaker features by testing for correlation between them would enhance the accuracy of the model.
+	
+	Finally, testing other modeling techniques could improve performance.
+	The Random Forest classifer as well as Grid Search classifier both lend themselves to this type of analysis.
+	Only an analysis would determine which performs best.
+
 \section{Conclusion}\label{conclusions}
+	
+	Binary classification is an important tool for a plethora of use-cases.
+	This particular model is both useful and competitive.
+	There is still work to be done to improve the model.
+	Gains in performance are likely to be made by testing other classifiers and pruning the feature set.
+	Notwithstanding, the model is as good as or better thsn 87\% of the models on the Kaggle leaderboard.
+
 
 \end{multicols}
 \end{document}
